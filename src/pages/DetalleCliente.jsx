@@ -81,7 +81,7 @@ const DetalleCliente = () => {
       <p>
         <strong>Ciudad:</strong> {cliente.address.city}
       </p>
-
+{/* Fix #1 (H03): no renderizar cliente.password en texto plano */}
       <h2>Credenciales</h2>
 
       <p>
