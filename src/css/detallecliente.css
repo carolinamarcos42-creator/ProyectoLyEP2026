@@ -56,3 +56,7 @@
     font-weight:bold;
     margin-bottom:25px;
 }
+.password-mask {
+  letter-spacing: 2px;
+  color: #6c757d;
+}
