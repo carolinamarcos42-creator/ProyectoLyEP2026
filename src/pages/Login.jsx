@@ -36,6 +36,7 @@ const Login = () => {
     setErrores(nuevosErrores)
     return Object.keys(nuevosErrores).length === 0
   }
+
   const manejarSubmit = (e) => {
     e.preventDefault()
     if (!validar()) return
@@ -45,7 +46,7 @@ const Login = () => {
       sector
     )
     if (!usuario) {
-     alert('Verifique los datos')
+      setErrores((prev) => ({ ...prev, credenciales: 'Verifique los datos' }))
       return
     }
     localStorage.setItem("role", usuario.sector)
@@ -80,6 +81,9 @@ const Login = () => {
           {errores.sector || ' '}
         </p>
         <button type="submit">Ingresar</button>
+        {errores.credenciales && (
+          <p style={{ color: 'red' }}>{errores.credenciales}</p>
+        )}
       </form>
     </div>
   )
