@@ -48,7 +48,7 @@ const Login = () => {
     if (!usuario) {
     // Se evita alert() nativo: bloquea la interacción y es inconsistente
     // con el resto del formulario, que muestra sus errores en línea.
-      setErrores((prev) => ({ ...prev, credenciales: 'Verifique los datos' }))
+      setErrores((prev) => ({ ...prev, credenciales: 'Email, contraseña o sector incorrectos' }))
     return
   }
     localStorage.setItem("role", usuario.sector)
