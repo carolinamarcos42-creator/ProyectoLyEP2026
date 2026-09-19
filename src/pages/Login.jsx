@@ -11,6 +11,7 @@ const Login = () => {
   const [errores, setErrores] = useState({})
   const { setAdmin } = useAutorizaciones()
   const navigate = useNavigate()
+  const estiloError = { color: 'red', minHeight: '18px' }
   const validar = () => {
     const nuevosErrores = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -65,12 +66,12 @@ const Login = () => {
       <form onSubmit={manejarSubmit}>
         <label>Email:</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.email || ' '}
         </p>
         <label>Contraseña:</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.password || ' '}
         </p>
         <label>Sector:</label>
@@ -79,11 +80,11 @@ const Login = () => {
           <option value="Soporte">Soporte</option>
           <option value="Gerencia">Gerencia</option>
         </select>
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.sector || ' '}
         </p>
         <button type="submit">Ingresar</button>
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.credenciales || ' '}
         </p>
       </form>
