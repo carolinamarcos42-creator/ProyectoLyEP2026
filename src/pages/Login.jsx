@@ -81,9 +81,9 @@ const Login = () => {
           {errores.sector || ' '}
         </p>
         <button type="submit">Ingresar</button>
-        {errores.credenciales && (
-          <p style={{ color: 'red' }}>{errores.credenciales}</p>
-        )}
+        <p style={{ color: 'red', minHeight: '18px' }}>
+          {errores.credenciales || ' '}
+        </p>
       </form>
     </div>
   )
