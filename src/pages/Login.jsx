@@ -11,6 +11,7 @@ const Login = () => {
   const [errores, setErrores] = useState({})
   const { setAdmin } = useAutorizaciones()
   const navigate = useNavigate()
+  const estiloError = { color: 'red', minHeight: '18px' }
   const validar = () => {
     const nuevosErrores = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -46,9 +47,11 @@ const Login = () => {
       sector
     )
     if (!usuario) {
-      setErrores((prev) => ({ ...prev, credenciales: 'Verifique los datos' }))
-      return
-    }
+    // Se evita alert() nativo: bloquea la interacción y es inconsistente
+    // con el resto del formulario, que muestra sus errores en línea.
+      setErrores((prev) => ({ ...prev, credenciales: 'Email, contraseña o sector incorrectos' }))
+    return
+  }
     localStorage.setItem("role", usuario.sector)
     setAdmin({
       nombre: usuario.nombre,
@@ -63,12 +66,12 @@ const Login = () => {
       <form onSubmit={manejarSubmit}>
         <label>Email:</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.email || ' '}
         </p>
         <label>Contraseña:</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.password || ' '}
         </p>
         <label>Sector:</label>
@@ -77,13 +80,13 @@ const Login = () => {
           <option value="Soporte">Soporte</option>
           <option value="Gerencia">Gerencia</option>
         </select>
-        <p style={{ color: 'red', minHeight: '18px' }}>
+        <p style={estiloError}>
           {errores.sector || ' '}
         </p>
         <button type="submit">Ingresar</button>
-        {errores.credenciales && (
-          <p style={{ color: 'red' }}>{errores.credenciales}</p>
-        )}
+        <p style={estiloError}>
+          {errores.credenciales || ' '}
+        </p>
       </form>
     </div>
   )
