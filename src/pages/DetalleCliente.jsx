@@ -1,6 +1,7 @@
 import '../css/detallecliente.css'
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import clientesService from "../services/clientesService";
 
 const PASSWORD_MASK = '••••••••';
  
@@ -14,9 +15,13 @@ const DetalleCliente = () => {
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/users/${id}`)
-      .then((res) => res.json())
-      .then((data) => setCliente(data));
+    clientesService.obtenerCliente(id)
+      .then((data) => {
+        setCliente(data);
+      })
+      .catch(() => {
+        setMensaje("No se pudo cargar la información del cliente");
+      });
   }, [id]);
 
   const eliminarCliente = async () => {
