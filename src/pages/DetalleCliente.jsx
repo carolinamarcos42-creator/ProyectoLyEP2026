@@ -38,69 +38,76 @@ const DetalleCliente = () => {
       setMensaje("Error al eliminar el cliente");
     }
   };
-  if (!cliente) {
-    return <h2>Cargando cliente...</h2>;
-  }
+  const confirmarEliminacion = () => {
+    const confirmar = window.confirm(
+      "¿Está seguro de que desea eliminar este cliente?"
+    );
+    if (!cliente) {
+      return <h2>Cargando cliente...</h2>;
+    }
 
-  return (
-    <div className="detalle-cliente">
-      <h1>Ficha del Cliente</h1>
-      <p>Rol actual: {role}</p>
+    return (
+      <div className="detalle-cliente">
+        <h1>Ficha del Cliente</h1>
+        <p>Rol actual: {role}</p>
 
-      {mensaje && <p className='mensaje-eliminado'>{mensaje}</p>}
+        {mensaje && <p className='mensaje-eliminado'>{mensaje}</p>}
 
-      <p>
-        <strong>ID:</strong> {cliente.id}
-      </p>
+        <p>
+          <strong>ID:</strong> {cliente.id}
+        </p>
 
-      <p>
-        <strong>Nombre:</strong>{" "}
-        {cliente.name.firstname} {cliente.name.lastname}
-      </p>
+        <p>
+          <strong>Nombre:</strong>{" "}
+          {cliente.name.firstname} {cliente.name.lastname}
+        </p>
 
-      <p>
-        <strong>Email:</strong> {cliente.email}
-      </p>
+        <p>
+          <strong>Email:</strong> {cliente.email}
+        </p>
 
-      <p>
-        <strong>Teléfono:</strong> {cliente.phone}
-      </p>
+        <p>
+          <strong>Teléfono:</strong> {cliente.phone}
+        </p>
 
-      <h2>Dirección</h2>
+        <h2>Dirección</h2>
 
-      <p>
-        <strong>Calle:</strong> {cliente.address.street}
-      </p>
+        <p>
+          <strong>Calle:</strong> {cliente.address.street}
+        </p>
 
-      <p>
-        <strong>Número:</strong> {cliente.address.number}
-      </p>
+        <p>
+          <strong>Número:</strong> {cliente.address.number}
+        </p>
 
-      <p>
-        <strong>Código Postal:</strong> {cliente.address.zipcode}
-      </p>
+        <p>
+          <strong>Código Postal:</strong> {cliente.address.zipcode}
+        </p>
 
-      <p>
-        <strong>Ciudad:</strong> {cliente.address.city}
-      </p>
-      {/* Fix #1 (H03): no renderizar cliente.password en texto plano */}
-      <h2>Credenciales</h2>
+        <p>
+          <strong>Ciudad:</strong> {cliente.address.city}
+        </p>
+        {/* Fix #1 (H03): no renderizar cliente.password en texto plano */}
+        <h2>Credenciales</h2>
 
-      <p>
-        <strong>Usuario:</strong> {cliente.username}
-      </p>
+        <p>
+          <strong>Usuario:</strong> {cliente.username}
+        </p>
 
-      <p>
-        <strong>Contraseña:</strong> <span className="password-mask">{PASSWORD_MASK}</span>
-      </p>
+        <p>
+          <strong>Contraseña:</strong> <span className="password-mask">{PASSWORD_MASK}</span>
+        </p>
 
-      {role?.trim() === "Gerencia" && (
-        <button className='btn-eliminar' onClick={eliminarCliente}>
-          Eliminar Cliente
-        </button>
-      )}
-    </div>
-  );
-};
-
+        {role?.trim() === "Gerencia" && (
+          <button
+            className="btn-eliminar"
+            onClick={confirmarEliminacion}
+          >
+            Eliminar Cliente
+          </button>
+        )}
+      </div>
+    );
+  };
+}
 export default DetalleCliente;
