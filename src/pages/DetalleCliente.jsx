@@ -4,9 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import clientesService from "../services/clientesService";
 
 const PASSWORD_MASK = '••••••••';
- 
+
 const DetalleCliente = () => {
- const { id } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -26,22 +26,16 @@ const DetalleCliente = () => {
 
   const eliminarCliente = async () => {
     try {
-      const respuesta = await fetch(
-        `https://fakestoreapi.com/users/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      await clientesService.eliminarCliente(id);
 
-      if (respuesta.ok) {
-        setMensaje("Cliente eliminado correctamente");
+      setMensaje("Cliente eliminado correctamente");
 
-        setTimeout(() => {
-          navigate("/clientes");
-        }, 2000);
-      }
+      setTimeout(() => {
+        navigate("/clientes");
+      }, 2000);
+
     } catch (error) {
-      setMensaje("Error al eliminar cliente");
+      setMensaje("Error al eliminar el cliente");
     }
   };
   if (!cliente) {
@@ -53,7 +47,7 @@ const DetalleCliente = () => {
       <h1>Ficha del Cliente</h1>
       <p>Rol actual: {role}</p>
 
-      {mensaje && <p className = 'mensaje-eliminado'>{mensaje}</p>}
+      {mensaje && <p className='mensaje-eliminado'>{mensaje}</p>}
 
       <p>
         <strong>ID:</strong> {cliente.id}
@@ -89,7 +83,7 @@ const DetalleCliente = () => {
       <p>
         <strong>Ciudad:</strong> {cliente.address.city}
       </p>
-{/* Fix #1 (H03): no renderizar cliente.password en texto plano */}
+      {/* Fix #1 (H03): no renderizar cliente.password en texto plano */}
       <h2>Credenciales</h2>
 
       <p>
@@ -99,9 +93,9 @@ const DetalleCliente = () => {
       <p>
         <strong>Contraseña:</strong> <span className="password-mask">{PASSWORD_MASK}</span>
       </p>
-     
+
       {role?.trim() === "Gerencia" && (
-        <button className='btn-eliminar'onClick={eliminarCliente}>
+        <button className='btn-eliminar' onClick={eliminarCliente}>
           Eliminar Cliente
         </button>
       )}
