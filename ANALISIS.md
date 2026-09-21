@@ -64,12 +64,17 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
 ## 3. Mejora seleccionada por participante
 
+   - **H02 — Unificar el control de acceso de "Eliminar Cliente" con AutorizacionesContext** *(Ingrid Monserrat Benitez)*
+     Se reemplazó la lectura directa de `localStorage.getItem("role")` en `DetalleCliente.jsx` por el rol expuesto desde `AutorizacionesContext` (`admin?.sector`), dejando una única fuente de verdad en el frontend para decidir quién puede eliminar clientes. Se eligió esta corrección porque ataca directamente un caso de control de acceso manipulable desde la consola del navegador (OWASP A01:2021), sin requerir cambios en el backend ni en FakeStoreAPI.
+
+     > **Estado:** Resuelto (issue #7).
+
 - **H03 — Ocultar la contraseña real del cliente en la vista de detalle** *(Paola Carolina Marcos)*
   Se reemplazó el valor real de `cliente.password` por un indicador enmascarado (`••••••••`), conservando solo el `username` visible. Se eligió esta corrección porque es la de menor riesgo dentro del alcance frontend del TP: no depende de modificar FakeStoreAPI (fuera de nuestro control) ni requiere cifrado en el cliente, y elimina de inmediato una exposición de datos sensibles (OWASP A02:2021) sin afectar ninguna funcionalidad existente.
 
   > **Estado:** Resuelto (issue #1).
 
-- **H15 — Confirmación previa antes de eliminar un cliente** *(Agustina)*
+- **H15 — Confirmación previa antes de eliminar un cliente** *(Agustina Quispe)*
   Se agregó `confirmarEliminacion`, que usa `window.confirm()` antes de invocar `eliminarCliente()`. Se seleccionó por ser una corrección de bajo riesgo que no toca la lógica de eliminación existente ni agrega dependencias, y resuelve directamente un problema de UX destructiva (borrado accidental sin posibilidad de cancelar).
 
 - **H17 — Reemplazar el `alert()` de login por un error en línea** *(Yael Coria)*
@@ -83,6 +88,8 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
 - **H22 — Deshabilitar el botón de login durante la autenticación** *(Angelo Rosario Abigail)*
   Se agregó el estado `cargando`, que deshabilita el botón y cambia su texto a "Ingresando..." mientras se resuelve el login. Se priorizó por prevenir condiciones de carrera por doble submit y por ser la mejora de feedback visual más solicitada en formularios web, sin modificar la lógica de autenticación.
+
+  
 
 *(Nota: se listan las seis mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
 
