@@ -39,8 +39,7 @@ const FormCliente = () => {
 
             username: nombre.toLowerCase().replace(/\s/g, ""),
 
-            password: "1234",
-
+           password: "1234", // H04 (issue #12): reemplazar por contraseña aleatoria
             name: {
                 firstname: nombre,
                 lastname: "-"
