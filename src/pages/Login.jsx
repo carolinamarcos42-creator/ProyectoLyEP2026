@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [sector, setSector] = useState('')
   const [errores, setErrores] = useState({})
+  const [cargando, setCargando] = useState(false) //H22
   const { setAdmin } = useAutorizaciones()
   const navigate = useNavigate()
   const estiloError = { color: 'red', minHeight: '18px' }
@@ -38,9 +39,13 @@ const Login = () => {
     return Object.keys(nuevosErrores).length === 0
   }
 
-  const manejarSubmit = (e) => {
-    e.preventDefault()
-    if (!validar()) return
+  const manejarSubmit = async (e) => {
+  e.preventDefault()
+  if (!validar()) return
+
+  setCargando(true)
+
+  try {
     const usuario = AutorizacionesService.login(
       email,
       password,
@@ -59,7 +64,10 @@ const Login = () => {
       sector: usuario.sector
     })
     navigate('/')
+  }finally {
+    setCargando(false) // H22: siempre desactivar
   }
+}
   return (
     <div className="login-container">
       <h1>Iniciar Sesión</h1>
@@ -83,7 +91,9 @@ const Login = () => {
         <p style={estiloError}>
           {errores.sector || ' '}
         </p>
-        <button type="submit">Ingresar</button>
+        <button type="submit" disabled={cargando}>
+        {cargando ? 'Ingresando...' : 'Ingresar'}
+        </button>
         <p style={estiloError}>
           {errores.credenciales || ' '}
         </p>
