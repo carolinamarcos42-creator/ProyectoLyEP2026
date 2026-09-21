@@ -78,21 +78,24 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 - **H15 — Confirmación previa antes de eliminar un cliente** *(Agustina Quispe)*
   Se agregó `confirmarEliminacion`, que usa `window.confirm()` antes de invocar `eliminarCliente()`. Se seleccionó por ser una corrección de bajo riesgo que no toca la lógica de eliminación existente ni agrega dependencias, y resuelve directamente un problema de UX destructiva (borrado accidental sin posibilidad de cancelar).
 
-- **H17 — Reemplazar el `alert()` de login por un error en línea** *(Yael Coria)*
+- **H17 — Reemplazar el alert() de login por un error en línea** *(Yael Coria)*
   Se sustituyó el `alert('Verifique los datos')` por un campo de error (`errores.credenciales`) integrado al mismo estado y estilo que ya usaba el formulario. Se priorizó esta mejora porque no modifica la lógica de autenticación, mejora la accesibilidad (los `alert()` nativos son menos amigables para lectores de pantalla) y da consistencia visual a todo el formulario.
 
   > **Estado:** Resuelto (issue #2). PR: #4 y #5.
 
 - **H20 — Evitar actualización de estado en componente desmontado** *(Angelo Rosario Abigail)*
   Se incorporó un flag `isMounted` dentro del `useEffect` de `ListaClientes.jsx`, con limpieza en el cleanup, para que `setClientes`, `setCargando` y `setError` no se ejecuten sobre un componente ya desmontado. Se eligió por ser la corrección mínima que elimina un memory leak real y los warnings de consola, sin tocar la lógica de carga ni agregar dependencias.
+
   > **Estado:** Resuelto (issue #8).
 
 - **H21 — Debounce en el filtro de búsqueda** *(Angelo Rosario Abigail)*
   Se implementó un debounce de 300ms sobre el input de búsqueda antes de ejecutar el `.filter()`. Se seleccionó porque es una optimización estándar de bajo riesgo: no cambia el resultado del filtro, solo su frecuencia de ejecución, y mejora la percepción de fluidez en listas grandes.
+
   > **Estado:** Resuelto (issue #8).
 
 - **H22 — Deshabilitar el botón de login durante la autenticación** *(Angelo Rosario Abigail)*
   Se agregó el estado `cargando`, que deshabilita el botón y cambia su texto a "Ingresando..." mientras se resuelve el login. Se priorizó por prevenir condiciones de carrera por doble submit y por ser la mejora de feedback visual más solicitada en formularios web, sin modificar la lógica de autenticación.
+
   > **Estado:** Resuelto (issue #8).
 
 *(Nota: se listan las siete mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
