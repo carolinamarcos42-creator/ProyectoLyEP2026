@@ -83,6 +83,11 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
   > **Estado:** Resuelto (issue #12).
 
+- **H05 — Eliminar la rama de código muerto en Dashboard.jsx** *(Yael Coria)*
+  Se eliminó la rama `{!admin ? ... : ...}` de `Dashboard.jsx`, que renderizaba el formulario de login cuando no había admin logueado. Esa rama nunca se ejecutaba en la práctica porque `RutaProtegida.jsx` ya redirige a `/login` antes de que `Dashboard` llegue a montarse. Se eligió esta mejora porque elimina código muerto y deja una única fuente de verdad para el control de acceso (`RutaProtegida`), sin modificar ninguna lógica de negocio ni agregar dependencias nuevas.
+
+  > **Estado:** Resuelto (issue #17). PR: #18.
+
 - **H15 — Confirmación previa antes de eliminar un cliente** *(Agustina Quispe)*
   Se agregó `confirmarEliminacion`, que usa `window.confirm()` antes de invocar `eliminarCliente()`. Se seleccionó por ser una corrección de bajo riesgo que no toca la lógica de eliminación existente ni agrega dependencias, y resuelve directamente un problema de UX destructiva (borrado accidental sin posibilidad de cancelar).
 
@@ -120,17 +125,16 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 2. **H06** — Persistir solo un token de sesión (cookie `httpOnly`) con expiración, en vez del objeto `admin` completo.
    
 ### Prioridad alta — código muerto y arquitectura
-3. **H05** — Eliminar la rama `!admin` inalcanzable en `Dashboard.jsx`.
-4. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
-5. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
+3. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
+4. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
 
 ### Prioridad media — funcionalidad y manejo de errores
-6. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
-7. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
-8. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
-9. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
-10. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
-11. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
+5. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
+6. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
+7. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
+8. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
+9. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
+10. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
 
 ### Prioridad baja — mantenibilidad y UX menor
 12. **H09** — Calcular los valores de las tarjetas del Dashboard a partir de datos reales.
