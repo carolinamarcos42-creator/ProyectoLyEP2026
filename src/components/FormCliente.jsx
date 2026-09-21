@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import clientesService from "../services/clientesService";
 
+const LONGITUD_PASSWORD = 10;
+
 const generarPasswordTemporal = () => {
-    return Math.random().toString(36).slice(-10);
+    return Math.random().toString(36).slice(-LONGITUD_PASSWORD);
 };
 
 const FormCliente = () => {
