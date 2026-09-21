@@ -9,23 +9,33 @@ const ListaClientes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/users")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Error al obtener clientes");
-        }
-        return res.json();
-      })
-      .then((data) => {
+ useEffect(() => {
+  let isMounted = true;
+
+  fetch("https://fakestoreapi.com/users")
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Error al obtener clientes");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      if (isMounted) {
         setClientes(data);
         setLoading(false);
-      })
-      .catch(() => {
+      }
+    })
+    .catch(() => {
+      if (isMounted) {
         setError(true);
         setLoading(false);
-      });
-  }, []);
+      }
+    });
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
 
   const clientesFiltrados = clientes.filter(
     (cliente) =>
