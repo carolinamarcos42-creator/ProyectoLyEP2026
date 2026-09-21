@@ -64,6 +64,9 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 ---
 
 ## 3. Mejora seleccionada por participante
+-- **H01 — Eliminar credenciales hardcodeadas del bundle del cliente** (Angelo Rosario Abigail) Se identificó que el array `usuarios` en `autorizacionesServices.js` contiene emails y contraseñas en texto plano, visibles en el bundle JS servido al navegador. La solución correcta requiere mover la autenticación a un backend real con hashing (bcrypt) y validación por token JWT. Se eligió documentarlo como **no implementable en el alcance actual** del TP porque el proyecto es un frontend puro (React + Vite) sin backend propio. La corrección queda como prioridad crítica en el backlog para una futura iteración con backend.
+
+  > **Estado:** No implementado — requiere backend.
 
 - **H02 — Unificar el control de acceso de "Eliminar Cliente" con AutorizacionesContext** *(Ingrid Monserrat Benitez)*
   Se reemplazó la lectura directa de `localStorage.getItem("role")` en `DetalleCliente.jsx` por el rol expuesto desde `AutorizacionesContext` (`admin?.sector`), dejando una única fuente de verdad en el frontend para decidir quién puede eliminar clientes. Se eligió esta corrección porque ataca directamente un caso de control de acceso manipulable desde la consola del navegador (OWASP A01:2021), sin requerir cambios en el backend ni en FakeStoreAPI.
@@ -114,7 +117,6 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 ## 4. Backlog priorizado (futuras iteraciones)
 
 ### Prioridad crítica — seguridad y control de acceso
-1. **H01** — Mover la autenticación a un backend real (API + hashing); eliminar credenciales hardcodeadas del bundle cliente.
 2. **H06** — Persistir solo un token de sesión (cookie `httpOnly`) con expiración, en vez del objeto `admin` completo.
    
 ### Prioridad alta — código muerto y arquitectura
