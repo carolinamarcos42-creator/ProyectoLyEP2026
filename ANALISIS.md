@@ -103,7 +103,12 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
   > **Estado:** Resuelto (issue #8).
 
-*(Nota: se listan las ocho mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
+- **H23 — Validar rol por ruta en RutaProtegida** *(Ingrid Monserrat Benitez)*
+  Se extendió `RutaProtegida` para aceptar una prop `rolesPermitidos`, y se declaró explícitamente en `routes.jsx` qué roles pueden acceder a cada ruta protegida (Dashboard, ListaClientes, DetalleCliente). Antes, el componente solo verificaba que hubiera sesión activa, sin validar el rol del admin, lo que permitía que cualquier sector accediera igual a todas las rutas (OWASP A01:2021, Broken Access Control). Se eligió esta corrección porque, aunque hoy ninguna página es exclusiva de Gerencia, deja preparado el mecanismo de control de acceso por rol a nivel de rutas para cuando se necesite restringir alguna en el futuro, sin requerir cambios en el backend.
+
+  > **Estado:** Resuelto (issue #14).
+
+*(Nota: se listan las nueve mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
 ---
 
 ## 4. Backlog priorizado (futuras iteraciones)
@@ -111,22 +116,21 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 ### Prioridad crítica — seguridad y control de acceso
 1. **H01** — Mover la autenticación a un backend real (API + hashing); eliminar credenciales hardcodeadas del bundle cliente.
 2. **H06** — Persistir solo un token de sesión (cookie `httpOnly`) con expiración, en vez del objeto `admin` completo.
-3. **H23** — Extender `RutaProtegida` para aceptar `rolesPermitidos` y centralizar la autorización por rol a nivel de rutas.
-
+   
 ### Prioridad alta — código muerto y arquitectura
-4. **H05** — Eliminar la rama `!admin` inalcanzable en `Dashboard.jsx`.
-5. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
-6. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
+3. **H05** — Eliminar la rama `!admin` inalcanzable en `Dashboard.jsx`.
+4. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
+5. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
 
 ### Prioridad media — funcionalidad y manejo de errores
-7. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
-8. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
-9. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
-10. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
-11. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
-12. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
+6. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
+7. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
+8. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
+9. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
+10. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
+11. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
 
 ### Prioridad baja — mantenibilidad y UX menor
-13. **H09** — Calcular los valores de las tarjetas del Dashboard a partir de datos reales.
-14. **H10** — Actualizar `name` del `package.json` y el texto del Footer al proyecto y grupo correctos.
-15. **H19** — Agregar un enlace de regreso al inicio en la página de error 404.
+12. **H09** — Calcular los valores de las tarjetas del Dashboard a partir de datos reales.
+13. **H10** — Actualizar `name` del `package.json` y el texto del Footer al proyecto y grupo correctos.
+14. **H19** — Agregar un enlace de regreso al inicio en la página de error 404.
