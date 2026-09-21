@@ -7,6 +7,7 @@ const PASSWORD_MASK = '••••••••';
 const DetalleCliente = () => {
  const { id } = useParams();
   const navigate = useNavigate();
+    // H02 (issue #7): reemplazar esta verificación por AutorizacionesContext
   const role = localStorage.getItem("role");
 
 
