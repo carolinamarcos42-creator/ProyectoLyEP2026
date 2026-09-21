@@ -97,7 +97,7 @@ const DetalleCliente = () => {
         <strong>Contraseña:</strong> <span className="password-mask">{PASSWORD_MASK}</span>
       </p>
      
-      {role?.trim() === "Gerencia" && (
+  {role === "Gerencia" && (
         <button className='btn-eliminar'onClick={eliminarCliente}>
           Eliminar Cliente
         </button>
