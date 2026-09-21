@@ -1,16 +1,17 @@
 import '../css/detallecliente.css'
-import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { AutorizacionesContext } from "../context/AutorizacionesContext";
 
 const PASSWORD_MASK = '••••••••';
  
 const DetalleCliente = () => {
  const { id } = useParams();
   const navigate = useNavigate();
-    // H02 (issue #7): reemplazar esta verificación por AutorizacionesContext
-  const role = localStorage.getItem("role");
-
-
+  // H02 (issue #7): rol obtenido desde AutorizacionesContext, ya no desde localStorage
+     const { admin } = useContext(AutorizacionesContext);
+     const role = admin?.sector;
+ 
   const [cliente, setCliente] = useState(null);
   const [mensaje, setMensaje] = useState("");
 
