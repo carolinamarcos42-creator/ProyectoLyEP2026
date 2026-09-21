@@ -1,15 +1,18 @@
 import '../css/detallecliente.css'
-import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { AutorizacionesContext } from "../context/AutorizacionesContext";
 
 const PASSWORD_MASK = '••••••••';
  
 const DetalleCliente = () => {
  const { id } = useParams();
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
-
-
+  // H02 (issue #7): rol obtenido desde AutorizacionesContext, ya no desde localStorage
+     const { admin } = useContext(AutorizacionesContext);
+     const role = admin?.sector;
+     const esGerencia = role === "Gerencia";
+ 
   const [cliente, setCliente] = useState(null);
   const [mensaje, setMensaje] = useState("");
 
@@ -95,7 +98,7 @@ const DetalleCliente = () => {
         <strong>Contraseña:</strong> <span className="password-mask">{PASSWORD_MASK}</span>
       </p>
      
-      {role?.trim() === "Gerencia" && (
+{esGerencia && (
         <button className='btn-eliminar'onClick={eliminarCliente}>
           Eliminar Cliente
         </button>
