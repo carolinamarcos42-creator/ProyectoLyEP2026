@@ -4,7 +4,7 @@ const Footer = () => {
     <footer>
       <p>
         &copy; 2026 Panel de Control de Clientes | Trabajo Integrador
-        Programacion Visual - GRUPO 5
+       LyEP 2026 - GRUPO 17
       </p>
 
     </footer>
