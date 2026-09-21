@@ -75,6 +75,11 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
   > **Estado:** Resuelto (issue #1).
 
+- **H04 — Generar contraseña aleatoria al crear un cliente nuevo** *(Ingrid Monserrat Benitez)*
+  Se reemplazó el valor fijo `password: "1234"` en `FormCliente.jsx` por una función `generarPasswordTemporal()` que genera una cadena aleatoria distinta para cada cliente nuevo. Se eligió esta corrección porque elimina una credencial débil y predecible (compartida por todos los registros) sin depender de un backend propio ni de cambios en FakeStoreAPI.
+
+  > **Estado:** Resuelto (issue #12).
+
 - **H15 — Confirmación previa antes de eliminar un cliente** *(Agustina Quispe)*
   Se agregó `confirmarEliminacion`, que usa `window.confirm()` antes de invocar `eliminarCliente()`. Se seleccionó por ser una corrección de bajo riesgo que no toca la lógica de eliminación existente ni agrega dependencias, y resuelve directamente un problema de UX destructiva (borrado accidental sin posibilidad de cancelar).
 
@@ -98,32 +103,30 @@ El prototipo implementa un panel de control de clientes funcional en su flujo pr
 
   > **Estado:** Resuelto (issue #8).
 
-*(Nota: se listan las siete mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
-
+*(Nota: se listan las ocho mejoras efectivamente implementadas por los integrantes del equipo, según lo acordado en el reparto grupal de hallazgos.)*
 ---
 
 ## 4. Backlog priorizado (futuras iteraciones)
 
 ### Prioridad crítica — seguridad y control de acceso
 1. **H01** — Mover la autenticación a un backend real (API + hashing); eliminar credenciales hardcodeadas del bundle cliente.
-2. **H04** — Generar contraseñas aleatorias/temporales para clientes nuevos en vez de un valor fijo.
-3. **H06** — Persistir solo un token de sesión (cookie `httpOnly`) con expiración, en vez del objeto `admin` completo.
-4. **H23** — Extender `RutaProtegida` para aceptar `rolesPermitidos` y centralizar la autorización por rol a nivel de rutas.
+2. **H06** — Persistir solo un token de sesión (cookie `httpOnly`) con expiración, en vez del objeto `admin` completo.
+3. **H23** — Extender `RutaProtegida` para aceptar `rolesPermitidos` y centralizar la autorización por rol a nivel de rutas.
 
 ### Prioridad alta — código muerto y arquitectura
-5. **H05** — Eliminar la rama `!admin` inalcanzable en `Dashboard.jsx`.
-6. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
-7. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
+4. **H05** — Eliminar la rama `!admin` inalcanzable en `Dashboard.jsx`.
+5. **H11** — Centralizar la URL de la API y las operaciones de clientes en `clientesService.js`.
+6. **H18** — Incorporar Vitest + React Testing Library, empezando por funciones puras y componentes chicos.
 
 ### Prioridad media — funcionalidad y manejo de errores
-8. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
-9. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
-10. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
-11. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
-12. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
-13. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
+7. **H07** — Aclarar "modo demo" en la UI o reemplazar FakeStoreAPI por un backend propio con persistencia real.
+8. **H08** — Reutilizar el regex de email de `Login.jsx` y agregar validación de formato de teléfono en `FormCliente.jsx`.
+9. **H13** — Verificar `respuesta.ok` y agregar manejo de errores al consultar el detalle de un cliente.
+10. **H14** — Mostrar mensaje de error cuando la eliminación de un cliente falla.
+11. **H16** — Usar optional chaining y valores por defecto en el filtro de `ListaClientes.jsx`.
+12. **H12** — Unificar el uso de `axios`/`fetch` en un solo mecanismo de peticiones HTTP.
 
 ### Prioridad baja — mantenibilidad y UX menor
-14. **H09** — Calcular los valores de las tarjetas del Dashboard a partir de datos reales.
-15. **H10** — Actualizar `name` del `package.json` y el texto del Footer al proyecto y grupo correctos.
-16. **H19** — Agregar un enlace de regreso al inicio en la página de error 404.
+13. **H09** — Calcular los valores de las tarjetas del Dashboard a partir de datos reales.
+14. **H10** — Actualizar `name` del `package.json` y el texto del Footer al proyecto y grupo correctos.
+15. **H19** — Agregar un enlace de regreso al inicio en la página de error 404.
