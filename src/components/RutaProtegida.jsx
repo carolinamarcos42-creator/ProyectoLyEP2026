@@ -1,8 +1,15 @@
 import { Navigate } from 'react-router-dom'
 import useAutorizaciones from '../hooks/useAutorizaciones'
 
-// H23 (issue #14): RutaProtegida ahora puede recibir rolesPermitidos
-// para validar el rol del admin, no solo si hay sesión activa.
+// H23 (issue #14): antes, RutaProtegida solo verificaba que hubiera
+// sesión activa, sin validar el rol. Esto permitía que un admin con
+// sector "Soporte" accediera a cualquier ruta protegida igual que uno
+// con sector "Gerencia" (OWASP A01:2021 - Broken Access Control).
+//
+// Ahora cada ruta declara explícitamente en routes.jsx qué roles
+// pueden acceder mediante la prop rolesPermitidos. Si no se pasa esa
+// prop, el comportamiento es el mismo de antes (solo valida sesión).
+// Si se pasa y el rol del admin no está incluido, se redirige a "/".
 const RutaProtegida = ({ children, rolesPermitidos }) => {
   const { admin } = useAutorizaciones()
 
