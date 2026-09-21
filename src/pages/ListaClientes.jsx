@@ -6,36 +6,56 @@ import FormCliente from "../components/FormCliente";
 const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [busquedaDebounced, setBusquedaDebounced] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/users")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Error al obtener clientes");
-        }
-        return res.json();
-      })
-      .then((data) => {
+ useEffect(() => {
+  let isMounted = true;
+
+  fetch("https://fakestoreapi.com/users")
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Error al obtener clientes");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      if (isMounted) {
         setClientes(data);
         setLoading(false);
-      })
-      .catch(() => {
+      }
+    })
+    .catch(() => {
+      if (isMounted) {
         setError(true);
         setLoading(false);
-      });
-  }, []);
+      }
+    });
 
-  const clientesFiltrados = clientes.filter(
-    (cliente) =>
-      cliente.name.lastname
-        .toLowerCase()
-        .includes(busqueda.toLowerCase()) ||
-      cliente.address.city
-        .toLowerCase()
-        .includes(busqueda.toLowerCase())
-  );
+  return () => {
+    isMounted = false;
+  };
+}, []);
+
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setBusquedaDebounced(busqueda);
+  }, 300);
+
+  return () => clearTimeout(timer);
+}, [busqueda]);
+
+  
+ const clientesFiltrados = clientes.filter(
+  (cliente) =>
+    (cliente.name?.lastname ?? "")
+    .toLowerCase()
+    .includes(busquedaDebounced.toLowerCase()) ||
+    (cliente.address?.city ?? "")
+    .toLowerCase()
+    .includes(busquedaDebounced.toLowerCase())
+);
 
   if (loading) {
     return <h2>Cargando clientes...</h2>;
