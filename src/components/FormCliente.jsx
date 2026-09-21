@@ -37,24 +37,19 @@ const FormCliente = () => {
             return;
         }
 
-        const nuevoCliente = {
-
-            email,
-
-            username: nombre.toLowerCase().replace(/\s/g, ""),
-
-      password: generarPasswordTemporal(),
-            name: {
-                firstname: nombre,
-                lastname: "-"
-            },
-
-            address: {
-                city: ciudad
-            },
-
-            phone: telefono
-        };
+       const nuevoCliente = {
+    email,
+    username: nombre.toLowerCase().replace(/\s/g, ""),
+    password: generarPasswordTemporal(),
+    name: {
+        firstname: nombre,
+        lastname: "-"
+    },
+    address: {
+        city: ciudad
+    },
+    phone: telefono
+};
 
         try {
 
