@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import clientesService from "../services/clientesService";
 
+const generarPasswordTemporal = () => {
+    return Math.random().toString(36).slice(-10);
+};
+
 const FormCliente = () => {
 
     const [nombre, setNombre] = useState("");
@@ -39,7 +43,7 @@ const FormCliente = () => {
 
             username: nombre.toLowerCase().replace(/\s/g, ""),
 
-           password: "1234", // H04 (issue #12): reemplazar por contraseña aleatoria
+      password: generarPasswordTemporal(),
             name: {
                 firstname: nombre,
                 lastname: "-"
