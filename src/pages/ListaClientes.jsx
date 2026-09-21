@@ -6,6 +6,7 @@ import FormCliente from "../components/FormCliente";
 const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [busquedaDebounced, setBusquedaDebounced] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -37,15 +38,24 @@ const ListaClientes = () => {
   };
 }, []);
 
-  const clientesFiltrados = clientes.filter(
-    (cliente) =>
-      cliente.name.lastname
-        .toLowerCase()
-        .includes(busqueda.toLowerCase()) ||
-      cliente.address.city
-        .toLowerCase()
-        .includes(busqueda.toLowerCase())
-  );
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setBusquedaDebounced(busqueda);
+  }, 300);
+
+  return () => clearTimeout(timer);
+}, [busqueda]);
+
+  
+ const clientesFiltrados = clientes.filter(
+  (cliente) =>
+    (cliente.name?.lastname ?? "")
+    .toLowerCase()
+    .includes(busquedaDebounced.toLowerCase()) ||
+    (cliente.address?.city ?? "")
+    .toLowerCase()
+    .includes(busquedaDebounced.toLowerCase())
+);
 
   if (loading) {
     return <h2>Cargando clientes...</h2>;
